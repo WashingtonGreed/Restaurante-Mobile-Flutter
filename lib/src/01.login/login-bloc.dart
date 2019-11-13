@@ -59,8 +59,8 @@ class _LoginPageState extends State<LoginPage>
                 : 775.0,
             decoration: new BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.fill,
-                image: new AssetImage("assets/img/login_fundo.jpg"),
+                fit: BoxFit.cover,
+                image: new AssetImage("assets/fundo.png"),
               ),
             ),
             child: Column(
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage>
                       width: 250.0,
                       height: 191.0,
                       fit: BoxFit.fill,
-                      image: new AssetImage('assets/img/login_logo.png')),
+                      image: new AssetImage('assets/looogo.png')),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 0.0),
