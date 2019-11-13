@@ -1,0 +1,89 @@
+name: restaurantemobileflutter
+
+description: restaurantemobileflutter
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.0 <3.0.0"
+
+  rflutter_alert: ^1.0.2
+
+  url_launcher: ^5.0.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  hive: ^1.0.0
+  path_provider: ^1.2.0
+  hive_generator: ^0.5.1
+  build_runner: ^1.7.1
+  carousel_slider: ^1.3.0
+  carousel_pro: ^0.0.1
+  flutter_swiper: ^1.1.6
+  bmprogresshud: ^0.0.5
+  progress_hud: ^1.1.0
+
+  floating_search_bar: ^0.2.0
+
+  cupertino_icons: ^0.1.2
+  http: ^0.12.0+2
+  
+  intl: ^0.16.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  bubble_bottom_bar: ^1.2.0
+  font_awesome_flutter: ^8.0.1
+  image_picker: ^0.6.1+10
+  
+flutter:
+
+  uses-material-design: true
+
+  assets:
+      - assets/img/login_logo.png
+      - assets/img/login_fundo.jpg
+      - assets/img/user.png
+      - assets/food1.jpeg
+      - assets/food2.jpeg
+      - assets/food3.jpeg
+      - assets/food4.jpeg
+      - assets/food5.jpeg
+      - assets/food6.jpeg
+      - assets/food7.jpeg
+      - assets/food8.jpeg
+      - assets/food9.jpeg
+      - assets/food10.jpeg
+      - assets/food11.jpeg
+      - assets/food12.jpg
+      - assets/Aikau.jfif
+      - assets/ataliba.jfif
+      - assets/Blumengarten.jfif
+      - assets/figueira.jfif
+      - assets/moinho-do-vale.jpg
+      - assets/Peppone.jfif
+      - assets/Ristorante.jfif
+      - assets/rosa-mexicano.jfif
+      - assets/cm1.jpeg
+      - assets/cm2.jpeg
+      - assets/cm3.jpeg
+      - assets/1.jpg
+      - assets/cm4.jpeg
+
+  fonts:
+    - family: WorkSansSemiBold
+      fonts:
+        - asset: assets/fonts/Work_Sans/WorkSans-SemiBold.ttf
+
+    - family: WorkSansBold
+      fonts:
+        - asset: assets/fonts/Work_Sans/WorkSans-Bold.ttf
+
+    - family: WorkSansMedium
+      fonts:
+        - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf

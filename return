@@ -1,0 +1,170 @@
+[33mcommit 56f5235eabf4868ebd274e7196e477d413091b1a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Washington <washington.oliveira.san@gmail.com>
+Date:   Sat Nov 9 01:28:55 2019 -0300
+
+    Commit  galeria
+
+[1mdiff --git a/lib/src/02.home/home-bloc.dart b/lib/src/02.home/home-bloc.dart[m
+[1mindex e18eed8..a26772e 100644[m
+[1m--- a/lib/src/02.home/home-bloc.dart[m
+[1m+++ b/lib/src/02.home/home-bloc.dart[m
+[36m@@ -309,6 +309,7 @@[m [mclass _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {[m
+             Container([m
+               height: 50.0,[m
+               child: ListView.builder([m
+[32m+[m[32m               physics: BouncingScrollPhysics(),[m
+                 primary: false,[m
+                 scrollDirection: Axis.horizontal,[m
+                 shrinkWrap: true,[m
+[1mdiff --git a/lib/src/03.profile/home.dart b/lib/src/03.profile/home.dart[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8d6f1db[m
+[1m--- /dev/null[m
+[1m+++ b/lib/src/03.profile/home.dart[m
+[36m@@ -0,0 +1,292 @@[m
+[32m+[m[32mimport 'dart:convert';[m
+[32m+[m[32mimport 'dart:io';[m
+[32m+[m
+[32m+[m[32mimport 'package:flutter/material.dart';[m
+[32m+[m[32mimport 'package:image_picker/image_picker.dart';[m
+[32m+[m[32mimport 'package:intl/intl.dart';[m
+[32m+[m[32mimport 'package:http/http.dart' as http;[m
+[32m+[m[32mimport 'dart:async';[m
+[32m+[m
+[32m+[m[32mvoid main() => runApp([m
+[32m+[m[32m      MaterialApp([m
+[32m+[m[32m        home: HomeEdit(),[m
+[32m+[m[32m      ),[m
+[32m+[m[32m    );[m
+[32m+[m
+[32m+[m[32mclass HomeEdit extends StatefulWidget {[m
+[32m+[m[32m  @override[m
+[32m+[m[32m  State<StatefulWidget> createState() => HomeEditState();[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfinal GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();[m
+[32m+[m
+[32m+[m[32mconst request = 'https://..../api/';[m
+[32m+[m[32mvar _image = new List(6); // [null,null,null,null,null][m
+[32m+[m
+[32m+[m[32mclass HomeEditState extends State<HomeEdit> {[m
+[32m+[m[32m  Future getImage(File image, int index) async {[m
+[32m+[m[32m    setState(() {[m
+[32m+[m[32m      _image[index] = image;[m
+[32m+[m[32m    });[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  @override[m
+[32m+[m[32m  Widget build(BuildContext context) {[m
+[32m+[m[32m    return Scaffold([m
+[32m+[m[32m      key: _scaffoldKey,[m
+[32m+[m[32m      body: Container([m
+[32m+[m[32m        padding: EdgeInsets.only([m
+[32m+[m[32m          top: 32,[m
+[32m+[m[32m          right: 16,[m
+[32m+[m[32m          left: 16,[m
+[32m+[m[32m          bottom: 16,[m
+[32m+[m[32m        ),[m
+[32m+[m[32m        color: Colors.white,[m
+[32m+[m[32m        child: ListView([m
+[32m+[m[32m          physics: BouncingScrollPhysics(),[m
+[32m+[m[32m          children: <Widget>[[m
+[32m+[m[32m            Text([m
+[32m+[m[32m              "Ótima escolha!\nQuanto mais fotos você\n tiver, mais sucesso terá",[m
+[32m+[m[32m              textAlign: TextAlign.center,[m
+[32m+[m[32m              style: TextStyle([m
+[32m+[m[32m                color: Colors.black,[m
+[32m+[m[32m                fontSize: 28,[m
+[32m+[m[32m              ),[m
+[32m+[m[32m            ),[m
+[32m+[m[32m            SizedBox([m
+[32m+[m[32m              height: 50,[m
+[32m+[m[32m            ),[m
+[32m+[m[32m            Row([m
+[32m+[m[32m              children: <Widget>[[m
+[32m+[m[32m                Expanded([m
+[32m+[m[32m                  flex: 1,[m
+[32m+[m[32m                  child: AspectRatio([m
+[32m+[m[32m                    aspectRatio: 1 / 1,[m
+[32m+[m[32m                    child: InkWell([m
+[32m+[m[32m                      onTap: () {[m
+[32m+[m[32m                        getGalleryImage(0);[m
+[32m+[m[32m                      },[m
+[32m+[m[32m                      child: Container([m
+[32m+[m[32m                        height: 100,[m
+[32m+[m[32m                        margin: EdgeInsets.all(4),[m
+[32m+[m[32m                        decoration: BoxDecoration([m
+[32m+[m[32m                            borderRadius: BorderRadius.circular(8),[m
+[32m+[m[32m                            color: Colors.blue[100]),[m
+[32m+[m[32m                        child: new Container(child: _buildChild(0)),[m
+[32m+[m[32m                      ),[m
+[32m+[m[32m                    ),[m
+[32m+[m[32m                  ),[m
+[32m+[m[32m                ),[m
+[32m+[m[32m                Expanded([m
+[32m+[m[32m                  flex: 1,[m
+[32m+[m[32m                  child: AspectRatio([m
+[32m+[m[32m                    aspectRatio: 1 / 1,[m
+[32m+[m[32m                    child: InkWell([m
+[32m+[m[32m                      onTap: () {[m
+[32m+[m[32m                        getGalleryImage(1);[m
+[32m+[m[32m                      },[m
+[32m+[m[32m                      child: Container([m
+[32m+[m[32m                        height: 100,[m
+[32m+[m[32m                        margin: EdgeInsets.all(4),[m
+[32m+[m[32m                        decoration: BoxDecoration([m
+[32m+[m[32m                            borderRadius: BorderRadius.circular(8),[m
+[32m+[m[32m                            color: Colors.blue[100]),[m
+[32m+[m[32m                        child: new Container(child: _buildChild(1)),[m
+[32m+[m[32m                      ),[m
+[32m+[m[32m                    ),[m
+[32m+[m[32m                  ),[m
+[32m+[m[32m                ),[m
+[32m+[m[32m                Expanded([m
+[32m+[m[32m                  flex: 1,[m
+[32m+[m[32m                  child: AspectRatio([m
+[32m+[m[32m                    aspectRatio: 1 / 1,[m
+[32m+[m[32m                    child: InkWell([m
+[32m+[m[32m                      onTap: () {[m
+[32m+[m[32m                        getGalleryImage(2);[m
+[32m+[m[32m                      },[m
+[32m+[m[32m                      child: Container([m
+[32m+[m[32m                        height: 100,[m
+[32m+[m[32m                        margin: EdgeInsets.all(4),[m
+[32m+[m[32m                        decoration: BoxDecoration([m
+[32m+[m[32m                            borderRadius: BorderRadius.circular(8),[m
+[32m+[m[32m                            color: Colors.blue[100]),[m
+[32m+[m[32m                        child: new Container(child: _buildChild(2)),[m
+[32m+[m[32m                      ),[m
+[32m+[m[32m                    ),[m
+[32m+[m[32m                  ),[m
+[32m+[m[32m                ),[m
+[32m+[m[32m              ],[m
+[32m+[m[32m            ),[m
+[32m+[m[32m            Row([m
+[32m+[m[32m              children: <Widget>[[m
+[32m+[m[32m                Expanded([m
+[32m+[m[32m                  flex: 1,[m
+[32m+[m[32m                  child: AspectRatio([m
+[32m+[m[32m                    aspectRatio: 1 / 1,[m
+[32m+[m[32m                    child: InkWell([m
+[32m+[m[32m                      onTap: () {[m
+[32m+[m[32m                        getGalleryImage(3);[m
+[32m+[m[32m                      },[m
+[32m+[m[32m                      child: Container([m
+[32m+[m[32m                        height: 100,[m
+[32m+[m[32m                        margin: EdgeInsets.all(4),[m
+[32m+[m[32m                        decoration: BoxDecoration([m
+[32m+[m[32m                            borderRadius: BorderRadius.circular(8),[m
+[32m+[m[32m                            color: Colors.blue[100]),[m
+[32m+[m[32m                        child: new Container(child: _buildChild(3)),[m
+[32m+[m[32m                      ),[m
+[32m+[m[32m                    ),[m
+[32m+[m[32m                  ),[m
+[32m+[m[32m                ),[m
+[32m+[m[32m                Expanded([m
+[32m+[m[32m                  flex: 1,[m
+[32m+[m[32m                  child: AspectRatio([m
+[32m+[m[32m                    aspectRatio: 1 / 1,[m
+[32m+[m[32m                    child: InkWell([m
+[32m+[m[32m                 
